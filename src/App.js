@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import SearchBar from './SearchBar';
+import RecipeList from './RecipeList';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [recipes, setRecipes] = useState([]);
+
+    const handleSearch = (query) => {
+        if (!query) {
+            setRecipes([]);
+            return;
+        }
+
+        fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.meals) {
+                    setRecipes(data.meals);
+                } else {
+                    setRecipes([]);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                setRecipes([]);
+            });
+    };
+
+    return (
+        <div>
+            <SearchBar onSearch={handleSearch} />
+            <RecipeList recipes={recipes} />
+        </div>
+    );
 }
 
 export default App;
