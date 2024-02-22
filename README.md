@@ -1,7 +1,3 @@
-Certainly! Here's a template for a README file that you can use for your Recipe Finder application:
-
----
-
 # Recipe Finder App
 
 Welcome to the Recipe Finder app! This web application allows you to search for recipes based on ingredients and discover delicious meals to prepare.
